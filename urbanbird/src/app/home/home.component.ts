@@ -11,13 +11,14 @@ import { Oferta } from 'app/shared/oferta.model';
 export class HomeComponent implements OnInit {
 
     public ofertas: Array<Oferta>
+    
     constructor(private ofertaService: OfertasService) {
 
     }
 
     ngOnInit() {
         this.ofertas = this.ofertaService.getOfertas();
-        console.log(this.ofertas);
+        //console.log(this.ofertas);
 
     }
 
