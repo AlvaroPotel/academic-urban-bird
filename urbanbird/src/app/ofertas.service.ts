@@ -1,8 +1,11 @@
 import { Oferta } from "./shared/oferta.model";
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 
+@Injectable()
 export class OfertasService {
 
-
+    constructor(private http: Http) { }
     public ofertas: Array<Oferta> = [
 
         {
@@ -59,5 +62,22 @@ export class OfertasService {
 
     public getOfertas(): Array<Oferta> {
         return this.ofertas;
+    }
+
+    public getOfertas2(): Promise<Oferta[]> {
+        return new Promise((resolve, reject) => {
+            let status = true;
+
+            if (status) {
+                setTimeout(() => resolve(this.ofertas), 3000)
+
+            } else {
+                reject({ codigo_error: 404, messagem_erro: "Not Found" })
+            }
+        })
+            .then((ofertas: Oferta[]) => {
+                return ofertas
+            })
+
     }
 }

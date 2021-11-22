@@ -11,15 +11,21 @@ import { Oferta } from 'app/shared/oferta.model';
 export class HomeComponent implements OnInit {
 
     public ofertas: Array<Oferta>
-    
-    constructor(private ofertaService: OfertasService) {
 
+    constructor(private ofertaService: OfertasService) {
     }
 
     ngOnInit() {
-        this.ofertas = this.ofertaService.getOfertas();
+        //this.ofertas = this.ofertaService.getOfertas();
         //console.log(this.ofertas);
+        this.ofertaService.getOfertas2()
+            .then((ofertas: Oferta[]) => {
+                console.log("funcao depois de 3 segundos");
 
+                this.ofertas = ofertas;
+            })
+            .catch((param: any) => {
+                console.log(param)
+            })
     }
-
 }
