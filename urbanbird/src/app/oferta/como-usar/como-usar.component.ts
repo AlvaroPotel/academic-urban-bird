@@ -10,6 +10,8 @@ import { OfertasService } from 'app/ofertas.service';
 })
 export class ComoUsarComponent implements OnInit {
 
+  public comoUsar: string = '';
+
   constructor(
     private route: ActivatedRoute,
     private ofertasService: OfertasService
@@ -17,8 +19,8 @@ export class ComoUsarComponent implements OnInit {
 
   ngOnInit() {
     this.ofertasService.getComoUsarOfertaPorId(this.route.parent.snapshot.params['id'])
-      .then((resposta: any) => {
-        return resposta.json();
+      .then((descricao: string) => {
+        this.comoUsar = descricao;
       })
   }
 
