@@ -11,16 +11,15 @@ export class OrdemCompraService {
     }
 
     public efetivarCompra(pedido: Pedido): Observable<number> {
-
-        let headers: Headers = new Headers;
+        let headers: Headers = new Headers()
+        
         headers.append('Content-type', 'application/json')
 
         return this.http.post(
             `${URL_API}/pedidos`,
             JSON.stringify(pedido),
-            new RequestOptions({ headers: headers })
-        ).map((resposta: Response) => resposta.json().id)
-
-
+            new RequestOptions({headers: headers})
+        )
+        .map((resposta: Response) => resposta.json().id)
     }
 }
