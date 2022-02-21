@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { OrdemCompraService } from 'app/ordem-compra.service';
-import { Pedido } from 'app/shared/pedido.model';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { min } from 'rxjs/operator/min';
+import { OrdemCompraService } from '../ordem-compra.service'
+import { Pedido } from '../shared/pedido.model'
 
 @Component({
   selector: 'app-ordem-compra',
@@ -11,27 +12,21 @@ import { Pedido } from 'app/shared/pedido.model';
 })
 export class OrdemCompraComponent implements OnInit {
 
-  @ViewChild('formulario') public f: NgForm
-
-  public idPedidoCompra: number
+  public formulario: FormGroup = new FormGroup({
+    'endereco': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]),
+    'numero': new FormControl(null, [Validators.required, Validators.minLength(1), Validators.maxLength(20)]),
+    'complemento': new FormControl(null),
+    'formaPagamento': new FormControl(null, [Validators.required]),
+  })
 
   constructor(private ordemCompraService: OrdemCompraService) { }
 
   ngOnInit() {
+
   }
 
   public confirmarCompra(): void {
-    console.log(this.f)
-    let pedido: Pedido = new Pedido(
-      this.f.value.endereco,
-      this.f.value.numero,
-      this.f.value.complemento,
-      this.f.value.formaPagamento
-    )
-    this.ordemCompraService.efetivarCompra(pedido)
-      .subscribe((idPedido: number) => {
-        this.idPedidoCompra = idPedido
-      })
-  }
+    console.log(this.formulario);
 
+  }
 }

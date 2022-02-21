@@ -192,6 +192,13 @@
       "complemento": "902",
       "fromaPagamento": "dinheiro",
       "id": 1
+    },
+    {
+      "endereco": "Rua De Santos Pousada",
+      "numero": "319",
+      "complemento": "4 A",
+      "fromaPagamento": "dinheiro",
+      "id": 2
     }
   ]
 }
