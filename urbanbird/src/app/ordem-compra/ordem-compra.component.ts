@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { min } from 'rxjs/operator/min';
 import { OrdemCompraService } from '../ordem-compra.service'
 import { Pedido } from '../shared/pedido.model'
+import { CarrinhoService } from 'app/carrinho.service';
+import { ItemCarrinho } from 'app/shared/item-carrinho.model';
 
 @Component({
   selector: 'app-ordem-compra',
@@ -13,6 +14,7 @@ import { Pedido } from '../shared/pedido.model'
 export class OrdemCompraComponent implements OnInit {
 
   public idPedidoCompra: number;
+  public itemCarrinho: ItemCarrinho[] = [];
 
   public formulario: FormGroup = new FormGroup({
     'endereco': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(120)]),
@@ -21,9 +23,14 @@ export class OrdemCompraComponent implements OnInit {
     'formaPagamento': new FormControl(null, [Validators.required]),
   })
 
-  constructor(private ordemCompraService: OrdemCompraService) { }
+  constructor(
+    private ordemCompraService: OrdemCompraService,
+    private carrinhoService: CarrinhoService) { }
 
   ngOnInit() {
+    this.itemCarrinho = this.carrinhoService.exibirItens();
+    console.log(this.itemCarrinho);
+
 
   }
 
@@ -36,7 +43,7 @@ export class OrdemCompraComponent implements OnInit {
     this.ordemCompraService.efetivarCompra(pedido)
       .subscribe((idPedido: number) => {
         this.idPedidoCompra = idPedido
-        
+
 
       })
   }
